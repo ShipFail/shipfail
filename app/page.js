@@ -127,7 +127,7 @@ const Page = () => {
             </Layout>
             <style jsx global>{`
                 .ascii-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-                .ascii-bg pre { position: absolute; inset: 0; margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; line-height: 1em; white-space: pre; font-size: 8px; color: rgba(0,0,0,0.2); }
+                .ascii-bg pre { position: absolute; inset: 0; margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; line-height: 1em; white-space: pre; font-size: 32px; color: rgba(255,255,255,0.02); }
 
                 .vibe-flash { position: fixed; inset: 0; background: radial-gradient(circle at center, rgba(46,211,183,0.4), rgba(255,255,255,0.92)); animation: vibe-flash 320ms ease-out forwards; pointer-events: none; z-index: 9999; }
                 @keyframes vibe-flash { 0% { opacity: 0; } 10% { opacity: 1; } 100% { opacity: 0; } }
