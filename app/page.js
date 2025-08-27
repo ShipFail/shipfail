@@ -19,6 +19,42 @@ const Page = () => {
     const buttonContainerRef = useRef(null);
     const asciiIdxRef = useRef(0);
     const [asciiFrame, setAsciiFrame] = useState(null);
+    const preRef = useRef(null);
+    const measureRef = useRef(null);
+
+    const fitAscii = () => {
+        const pre = preRef.current;
+        if (!pre) return;
+        const baseFont = 10; // px
+
+        // Create or reuse a hidden measurement element with identical text/styles
+        let measure = measureRef.current;
+        if (!measure) {
+            measure = document.createElement("pre");
+            measure.style.position = "absolute";
+            measure.style.visibility = "hidden";
+            measure.style.left = "-9999px";
+            measure.style.top = "-9999px";
+            measure.style.whiteSpace = "pre";
+            document.body.appendChild(measure);
+            measureRef.current = measure;
+        }
+
+        const computed = window.getComputedStyle(pre);
+        measure.style.fontFamily = computed.fontFamily;
+        measure.style.lineHeight = computed.lineHeight || "1em";
+        measure.style.fontSize = baseFont + "px";
+        measure.textContent = pre.textContent || "";
+
+        const contentWidth = Math.max(1, measure.scrollWidth);
+        const contentHeight = Math.max(1, measure.scrollHeight);
+
+        const containerWidth = window.innerWidth;
+        const containerHeight = window.innerHeight;
+        const scale = Math.max(containerWidth / contentWidth, containerHeight / contentHeight);
+        const newSize = Math.max(1, baseFont * scale);
+        pre.style.fontSize = (newSize * 2) + "px";
+    };
 
     useEffect(() => {
         let index = 0;
@@ -35,11 +71,27 @@ const Page = () => {
     useEffect(() => {
         if (!Array.isArray(VIDEO) || VIDEO.length === 0) return;
         setAsciiFrame(VIDEO[0]);
+        window.requestAnimationFrame(fitAscii);
         const intervalId = setInterval(() => {
             asciiIdxRef.current = (asciiIdxRef.current + 1) % VIDEO.length;
             setAsciiFrame(VIDEO[asciiIdxRef.current]);
         }, 1000 / 24);
         return () => clearInterval(intervalId);
+    }, []);
+
+    useEffect(() => {
+        const onResize = () => {
+            window.requestAnimationFrame(fitAscii);
+        };
+        window.addEventListener("resize", onResize);
+        window.requestAnimationFrame(fitAscii);
+        return () => {
+            window.removeEventListener("resize", onResize);
+            if (measureRef.current) {
+                document.body.removeChild(measureRef.current);
+                measureRef.current = null;
+            }
+        };
     }, []);
 
     useEffect(() => {
@@ -89,7 +141,7 @@ const Page = () => {
                 <Seo title={"Home"} />
                 <div className={`d-flex flex-column min-vh-100 ${isShaking ? "camera-shake" : ""}`} style={{position: "relative"}}>
                     <div className="ascii-bg" aria-hidden="true">
-                        <pre>
+                        <pre ref={preRef}>
 {asciiFrame ? asciiFrame.join('\n') : ''}
                         </pre>
                     </div>
