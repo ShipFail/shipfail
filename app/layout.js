@@ -23,11 +23,13 @@ import { Provider } from "react-redux";
 
 const RootLayout = ({ children }) => {
   return (
-    <>
-      <Provider store={store}>
-        {children}
-      </Provider>
-    </>
+    <html lang="en">
+      <body>
+        <Provider store={store}>
+          {children}
+        </Provider>
+      </body>
+    </html>
   )
 }
 export default RootLayout;
