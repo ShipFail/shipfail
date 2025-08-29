@@ -20,14 +20,20 @@
 import store from "@/shared/redux/store";
 import "./globals.scss";
 import { Provider } from "react-redux";
+import Script from "next/script";
 
 const RootLayout = ({ children }) => {
   return (
     <html lang="en">
+      <head>
+        <link href="https://cdn.jsdelivr.net/npm/dragula@3.7.3/dist/dragula.min.css" rel="stylesheet" />
+        <meta name="keywords" content="admin dashboard, admin panel, admin template, nextjs template, nextjs dashboard, next js themes, react bootstrap template, react bootstrap component, next js framework, nextjs admin template, router, framework front end, nextjs app, nextjs app router, template admin panel, nextjs, next js framework" />
+      </head>
       <body>
         <Provider store={store}>
           {children}
         </Provider>
+        <Script src="https://cdn.jsdelivr.net/npm/dragula@3.7.3/dist/dragula.min.js" strategy="afterInteractive" />
       </body>
     </html>
   )

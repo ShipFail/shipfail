@@ -13,14 +13,6 @@ const nextConfig = {
     loader: "imgix",
     path: "/",
   },
-  async rewrites() {
-    return [
-      {
-        source: "/",
-        destination: "/landing/20250828-huan.html",
-      },
-    ];
-  },
 };
 
 module.exports = nextConfig;
