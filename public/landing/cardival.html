@@ -1,23 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cardival — Every group, a new game.</title>
   <meta name="description" content="Cardival is the AI‑powered party card game generator. Upload a list of names and get a fully playable, personalized UNO‑style deck in seconds. Join by link, play on your phone."/>
-  <meta name="theme-color" content="#111827"/>
+  <meta name="theme-color" content="#0b1220"/>
   <meta name="robots" content="index,follow"/>
   <!-- Open Graph -->
   <meta property="og:title" content="Cardival — Every group, a new game."/>
   <meta property="og:description" content="The Jackbox + GitHub of AI party card games. Upload names → auto‑generate a deck → play in seconds."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://cardival.example"/>
-  <meta property="og:image" content="https://dummyimage.com/1200x630/111827/ffffff&text=Cardival"/>
+  <meta property="og:image" content="https://dummyimage.com/1200x630/0b1220/ffffff&text=Cardival"/>
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Cardival — Every group, a new game."/>
   <meta name="twitter:description" content="Upload a list. Get a game. Personalized party card games, forged by AI."/>
-  <meta name="twitter:image" content="https://dummyimage.com/1200x630/111827/ffffff&text=Cardival"/>
+  <meta name="twitter:image" content="https://dummyimage.com/1200x630/0b1220/ffffff&text=Cardival"/>
 
   <!-- JSON‑LD (Website + Product) -->
   <script type="application/ld+json">
@@ -32,107 +32,100 @@
 
   <!-- Tailwind & Flowbite (CDN for MVP) -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { theme: { extend: { colors: { brand: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a'} } } } }</script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.css" integrity="sha512-Yl6c4o9mLw6oY8i4hD8Up1V0a9wQy9Q0H9YpH8XQGm8C3cE8m3bD6oWzB1mQ2F4m3rQ6j8cCwqVfC5F3xg2sMw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { brand: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a'} } } }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
-    /* Simple hash‑router: two logical pages in one file */
     [data-page]{display:none}
     [data-page].active{display:block}
     html{scroll-behavior:smooth}
   </style>
 </head>
-<body class="bg-white text-gray-900 antialiased">
+<body class="bg-slate-900 text-slate-100 antialiased">
 
-<!-- ========================= -->
 <!-- Top Notification Bar -->
-<!-- ========================= -->
-<div class="bg-gradient-to-r from-brand-600 via-purple-600 to-fuchsia-600 text-white text-center text-sm py-2">
+<div class="bg-gradient-to-r from-brand-600 via-indigo-600 to-fuchsia-600 text-white text-center text-sm py-2">
   ✨ Cardival MVP is live — import a list, play in seconds. <a href="#home" class="underline font-medium">Try the demo</a>
 </div>
 
-<!-- ========================= -->
 <!-- Navbar -->
-<!-- ========================= -->
-<nav class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-gray-100">
+<nav class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur border-b border-slate-800">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <a href="#home" class="flex items-center gap-2 group" aria-label="Cardival home">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="shrink-0">
-          <rect x="3" y="3" width="18" height="18" rx="4" class="fill-brand-600/10"/>
-          <path d="M8 8h8M8 12h6M8 16h4" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+          <rect x="3" y="3" width="18" height="18" rx="4" class="fill-brand-600/20"/>
+          <path d="M8 8h8M8 12h6M8 16h4" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
         </svg>
         <span class="text-lg font-semibold tracking-tight">Cardival</span>
       </a>
       <div class="hidden md:flex items-center gap-6">
-        <a href="#home" class="text-sm hover:text-brand-700">Home</a>
-        <a href="#learn" class="text-sm hover:text-brand-700">How it works</a>
-        <a href="#pricing" class="text-sm hover:text-brand-700">Pricing</a>
-        <a href="#faq" class="text-sm hover:text-brand-700">FAQ</a>
+        <a href="#home" class="text-sm text-slate-300 hover:text-white">Home</a>
+        <a href="#learn" class="text-sm text-slate-300 hover:text-white">How it works</a>
+        <a href="#pricing" class="text-sm text-slate-300 hover:text-white">Pricing</a>
+        <a href="#faq" class="text-sm text-slate-300 hover:text-white">FAQ</a>
       </div>
       <div class="hidden md:flex items-center gap-3">
-        <a href="#signup" class="text-sm text-gray-600 hover:text-gray-900">Sign in</a>
+        <button id="themeToggle" class="p-2 rounded-lg border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500" aria-label="Toggle theme">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M7.05 16.95l-1.414 1.414m12.728 0l-1.414-1.414M7.05 7.05 5.636 5.636"/></svg>
+        </button>
+        <a href="#signup" class="text-sm text-slate-300 hover:text-white">Sign in</a>
         <a href="#get-started" class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-400">Get started</a>
       </div>
-      <button id="menuBtn" class="md:hidden p-2 rounded-lg border border-gray-200" aria-label="Open menu">
+      <button id="menuBtn" class="md:hidden p-2 rounded-lg border border-slate-700 text-slate-200" aria-label="Open menu">
         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
     </div>
   </div>
-  <!-- mobile menu -->
-  <div id="mobileMenu" class="hidden md:hidden border-t border-gray-100">
+  <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800">
     <div class="px-4 py-3 space-y-2">
       <a href="#home" class="block py-2">Home</a>
       <a href="#learn" class="block py-2">How it works</a>
       <a href="#pricing" class="block py-2">Pricing</a>
       <a href="#faq" class="block py-2">FAQ</a>
-      <a href="#get-started" class="block py-2 font-semibold text-brand-700">Get started</a>
+      <a href="#get-started" class="block py-2 font-semibold text-brand-300">Get started</a>
     </div>
   </div>
 </nav>
 
-<!-- ========================= -->
 <!-- PAGE: HOME -->
-<!-- ========================= -->
 <main id="home-page" data-page class="active">
-  <!-- Hero -->
+  <!-- Hero with embedded product screenshot -->
   <section class="relative overflow-hidden">
-    <div class="absolute inset-0 -z-10 bg-gradient-to-br from-brand-50 to-white"></div>
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-indigo-900 via-slate-900 to-slate-950"></div>
     <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-28">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
-          <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-gray-900">Every group, a new game.</h1>
-          <p class="mt-4 text-lg text-gray-600">Cardival turns your friend or team list into a personalized, hilarious UNO‑style game — generated by AI in seconds. Join by link, play on your phone, laugh together.</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-white">Every group, a new game.</h1>
+          <p class="mt-4 text-lg text-slate-300">Cardival turns your friend or team list into a personalized, hilarious UNO‑style game — generated by AI in seconds. Join by link, play on your phone, laugh together.</p>
           <div class="mt-8 flex flex-col sm:flex-row gap-3">
             <a href="#get-started" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3 text-white font-semibold shadow hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-400">
               Generate a deck
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
-            <a href="#demo" class="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-6 py-3 text-gray-800 hover:bg-gray-50">
+            <a href="#demo" class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 px-6 py-3 text-slate-200 hover:bg-slate-800">
               Watch 60s demo
             </a>
           </div>
-          <div class="mt-6 flex items-center gap-6 text-sm text-gray-500">
-            <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17l-3.88-3.88-1.41 1.42L9 19 20.29 7.71l-1.41-1.41z"/></svg> No installs</div>
-            <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17l-3.88-3.88-1.41 1.42L9 19 20.29 7.71l-1.41-1.41z"/></svg> Phone friendly</div>
-            <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17l-3.88-3.88-1.41 1.42L9 19 20.29 7.71l-1.41-1.41z"/></svg> Play in seconds</div>
+          <div class="mt-6 flex items-center gap-6 text-sm text-slate-400">
+            <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17l-3.88-3.88-1.41 1.42L9 19 20.29 7.71l-1.41-1.41z"/></svg> No installs</div>
+            <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17l-3.88-3.88-1.41 1.42L9 19 20.29 7.71l-1.41-1.41z"/></svg> Phone friendly</div>
+            <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17l-3.88-3.88-1.41 1.42L9 19 20.29 7.71l-1.41-1.41z"/></svg> Play in seconds</div>
           </div>
         </div>
-        <!-- Illustrative mockup -->
+        <!-- Embedded screenshot card -->
         <div class="relative">
-          <div class="aspect-[4/3] rounded-2xl border border-gray-200 shadow-sm bg-white overflow-hidden">
-            <div class="h-full w-full grid grid-cols-3 gap-3 p-4">
-              <div class="rounded-xl bg-gradient-to-br from-fuchsia-500 to-pink-500 text-white flex items-center justify-center text-3xl font-bold">5</div>
-              <div class="rounded-xl bg-gradient-to-br from-brand-500 to-blue-700 text-white flex items-center justify-center text-3xl font-bold">7</div>
-              <div class="rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center text-3xl font-bold">2</div>
-              <div class="rounded-xl bg-gradient-to-br from-yellow-400 to-amber-600 text-white flex items-center justify-center font-semibold">Reverse</div>
-              <div class="rounded-xl bg-gradient-to-br from-gray-700 to-black text-white flex items-center justify-center font-semibold">Wild +4</div>
-              <div class="rounded-xl bg-gradient-to-br from-purple-500 to-indigo-700 text-white flex items-center justify-center font-semibold">Skip</div>
-            </div>
+          <div class="rounded-2xl border border-slate-800 shadow-xl bg-slate-900 overflow-hidden">
+            <img src="https://dummyimage.com/1200x800/0b1220/ffffff&text=Product+Screenshot" alt="Cardival product screenshot" class="w-full h-auto"/>
           </div>
-          <div class="absolute -bottom-4 -left-4 bg-white border border-gray-200 rounded-xl shadow p-3 text-sm">
-            <div class="font-semibold">Auto‑generated card</div>
-            <div class="text-gray-600">“Architect's Code Review” — choose 1 player to skip</div>
+          <div class="absolute -bottom-4 -left-4 bg-slate-900 border border-slate-800 rounded-xl shadow p-3 text-sm">
+            <div class="font-semibold text-white">Auto‑generated card</div>
+            <div class="text-slate-300">“Architect's Code Review” — choose 1 player to skip</div>
           </div>
         </div>
       </div>
@@ -140,16 +133,16 @@
   </section>
 
   <!-- Social proof -->
-  <section aria-label="Social proof" class="py-8 border-t border-gray-100">
+  <section aria-label="Social proof" class="py-8 border-t border-slate-800">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <p class="text-center text-sm text-gray-500">Loved by teams & friend groups</p>
+      <p class="text-center text-sm text-slate-400">Loved by teams & friend groups</p>
       <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 opacity-70">
-        <div class="h-8 bg-gray-100 rounded"></div>
-        <div class="h-8 bg-gray-100 rounded"></div>
-        <div class="h-8 bg-gray-100 rounded"></div>
-        <div class="h-8 bg-gray-100 rounded"></div>
-        <div class="h-8 bg-gray-100 rounded"></div>
-        <div class="h-8 bg-gray-100 rounded"></div>
+        <div class="h-8 bg-slate-800 rounded"></div>
+        <div class="h-8 bg-slate-800 rounded"></div>
+        <div class="h-8 bg-slate-800 rounded"></div>
+        <div class="h-8 bg-slate-800 rounded"></div>
+        <div class="h-8 bg-slate-800 rounded"></div>
+        <div class="h-8 bg-slate-800 rounded"></div>
       </div>
     </div>
   </section>
@@ -159,29 +152,29 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
         <h2 class="text-3xl font-bold tracking-tight">Party‑ready in three moves</h2>
-        <p class="mt-3 text-gray-600">Upload names → auto‑generate deck → play with a link.</p>
+        <p class="mt-3 text-slate-300">Upload names → auto‑generate deck → play with a link.</p>
       </div>
       <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="rounded-2xl border border-gray-200 p-6">
-          <div class="w-10 h-10 rounded-lg bg-brand-600/10 text-brand-700 grid place-items-center mb-3">
+        <div class="rounded-2xl border border-slate-800 p-6 bg-slate-900/60">
+          <div class="w-10 h-10 rounded-lg bg-brand-600/20 text-brand-300 grid place-items-center mb-3">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 7h16M4 12h10M4 17h7"/></svg>
           </div>
           <h3 class="font-semibold">AI‑generated decks</h3>
-          <p class="mt-2 text-sm text-gray-600">Special cards based on your group’s roles and quirks. Always fresh, always funny.</p>
+          <p class="mt-2 text-sm text-slate-300">Special cards based on your group’s roles and quirks. Always fresh, always funny.</p>
         </div>
-        <div class="rounded-2xl border border-gray-200 p-6">
-          <div class="w-10 h-10 rounded-lg bg-emerald-600/10 text-emerald-700 grid place-items-center mb-3">
+        <div class="rounded-2xl border border-slate-800 p-6 bg-slate-900/60">
+          <div class="w-10 h-10 rounded-lg bg-emerald-600/20 text-emerald-300 grid place-items-center mb-3">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M12 6v12m6-6H6"/></svg>
           </div>
           <h3 class="font-semibold">Zero‑install join</h3>
-          <p class="mt-2 text-sm text-gray-600">Open a link, type your name, you’re in. Works great on phones and laptops.</p>
+          <p class="mt-2 text-sm text-slate-300">Open a link, type your name, you’re in. Works great on phones and laptops.</p>
         </div>
-        <div class="rounded-2xl border border-gray-200 p-6">
-          <div class="w-10 h-10 rounded-lg bg-fuchsia-600/10 text-fuchsia-700 grid place-items-center mb-3">
+        <div class="rounded-2xl border border-slate-800 p-6 bg-slate-900/60">
+          <div class="w-10 h-10 rounded-lg bg-fuchsia-600/20 text-fuchsia-300 grid place-items-center mb-3">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
           </div>
           <h3 class="font-semibold">UNO‑style core</h3>
-          <p class="mt-2 text-sm text-gray-600">Simple rules everyone knows. 30‑second turns, auto‑play on timeout.</p>
+          <p class="mt-2 text-sm text-slate-300">Simple rules everyone knows. 30‑second turns, auto‑play on timeout.</p>
         </div>
       </div>
     </div>
@@ -201,23 +194,23 @@
   </section>
 
   <!-- Testimonials -->
-  <section class="py-16 border-t border-gray-100">
+  <section class="py-16 border-t border-slate-800">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
         <h2 class="text-3xl font-bold tracking-tight">What groups are saying</h2>
       </div>
       <div class="mt-8 grid md:grid-cols-3 gap-6">
-        <figure class="rounded-2xl border border-gray-200 p-6 bg-white">
-          <blockquote class="text-gray-700">“We used it at our offsite and the cards roasted our PMs perfectly. Instant team bonding.”</blockquote>
-          <figcaption class="mt-4 text-sm text-gray-500">— Maya, Product Lead</figcaption>
+        <figure class="rounded-2xl border border-slate-800 p-6 bg-slate-900/60">
+          <blockquote class="text-slate-200">“We used it at our offsite and the cards roasted our PMs perfectly. Instant team bonding.”</blockquote>
+          <figcaption class="mt-4 text-sm text-slate-400">— Maya, Product Lead</figcaption>
         </figure>
-        <figure class="rounded-2xl border border-gray-200 p-6 bg-white">
-          <blockquote class="text-gray-700">“Upload a roster → boom, game night. No installs, no rules explanation. Perfect.”</blockquote>
-          <figcaption class="mt-4 text-sm text-gray-500">— Dan, Community Host</figcaption>
+        <figure class="rounded-2xl border border-slate-800 p-6 bg-slate-900/60">
+          <blockquote class="text-slate-200">“Upload a roster → boom, game night. No installs, no rules explanation. Perfect.”</blockquote>
+          <figcaption class="mt-4 text-sm text-slate-400">— Dan, Community Host</figcaption>
         </figure>
-        <figure class="rounded-2xl border border-gray-200 p-6 bg-white">
-          <blockquote class="text-gray-700">“The AI special cards are so on‑point it’s spooky. We cried laughing.”</blockquote>
-          <figcaption class="mt-4 text-sm text-gray-500">— Aisha, Student Council</figcaption>
+        <figure class="rounded-2xl border border-slate-800 p-6 bg-slate-900/60">
+          <blockquote class="text-slate-200">“The AI special cards are so on‑point it’s spooky. We cried laughing.”</blockquote>
+          <figcaption class="mt-4 text-sm text-slate-400">— Aisha, Student Council</figcaption>
         </figure>
       </div>
     </div>
@@ -227,44 +220,45 @@
   <section id="get-started" class="py-16">
     <div class="max-w-xl mx-auto px-6 text-center">
       <h3 class="text-2xl font-bold">Get early access</h3>
-      <p class="mt-2 text-gray-600">We’re rolling out Cardival beta invites. Drop your email to get a link.</p>
+      <p class="mt-2 text-slate-300">We’re rolling out Cardival beta invites. Drop your email to get a link.</p>
       <form class="mt-6 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3" onsubmit="event.preventDefault(); document.getElementById('signupDone').classList.remove('hidden'); this.reset();">
         <label class="sr-only" for="email">Email</label>
-        <input id="email" type="email" required placeholder="you@example.com" class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-brand-400 focus:outline-none" />
+        <input id="email" type="email" required placeholder="you@example.com" class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 placeholder-slate-500 focus:ring-2 focus:ring-brand-400 focus:outline-none" />
         <button class="rounded-xl bg-brand-600 px-6 py-3 font-semibold text-white hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-400">Request invite</button>
       </form>
-      <p id="signupDone" class="hidden mt-4 text-emerald-700">Thanks! We’ll email you an invite soon.</p>
+      <p id="signupDone" class="hidden mt-4 text-emerald-400">Thanks! We’ll email you an invite soon.</p>
     </div>
   </section>
 </main>
 
-<!-- ========================= -->
 <!-- PAGE: HOW IT WORKS / PRICING -->
-<!-- ========================= -->
 <main id="learn-page" data-page>
-  <!-- How it works -->
+  <!-- How it works with embedded walkthrough screenshot -->
   <section id="learn" class="py-16">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
         <h2 class="text-3xl font-bold tracking-tight">How Cardival works</h2>
-        <p class="mt-3 text-gray-600">From list to laughter in three steps.</p>
+        <p class="mt-3 text-slate-300">From list to laughter in three steps.</p>
       </div>
       <div class="mt-12 grid lg:grid-cols-3 gap-8 items-start">
-        <div class="rounded-2xl border border-gray-200 p-6">
-          <div class="w-10 h-10 rounded-lg bg-brand-600/10 text-brand-700 grid place-items-center mb-3 font-bold">1</div>
+        <div class="rounded-2xl border border-slate-800 p-6 bg-slate-900/60">
+          <div class="w-10 h-10 rounded-lg bg-brand-600/20 text-brand-300 grid place-items-center mb-3 font-bold">1</div>
           <h3 class="font-semibold">Upload names</h3>
-          <p class="mt-2 text-sm text-gray-600">Paste a list or upload CSV (e.g., LinkedIn export, class roster). No installs, no accounts required for players.</p>
+          <p class="mt-2 text-sm text-slate-300">Paste a list or upload CSV (e.g., LinkedIn export, class roster). No installs, no accounts required for players.</p>
         </div>
-        <div class="rounded-2xl border border-gray-200 p-6">
-          <div class="w-10 h-10 rounded-lg bg-brand-600/10 text-brand-700 grid place-items-center mb-3 font-bold">2</div>
+        <div class="rounded-2xl border border-slate-800 p-6 bg-slate-900/60">
+          <div class="w-10 h-10 rounded-lg bg-brand-600/20 text-brand-300 grid place-items-center mb-3 font-bold">2</div>
           <h3 class="font-semibold">AI generates the deck</h3>
-          <p class="mt-2 text-sm text-gray-600">We create color/number cards plus special cards tailored to your group’s roles and quirks, including art and flavor text.</p>
+          <p class="mt-2 text-sm text-slate-300">We create color/number cards plus special cards tailored to your group’s roles and quirks, including art and flavor text.</p>
         </div>
-        <div class="rounded-2xl border border-gray-200 p-6">
-          <div class="w-10 h-10 rounded-lg bg-brand-600/10 text-brand-700 grid place-items-center mb-3 font-bold">3</div>
+        <div class="rounded-2xl border border-slate-800 p-6 bg-slate-900/60">
+          <div class="w-10 h-10 rounded-lg bg-brand-600/20 text-brand-300 grid place-items-center mb-3 font-bold">3</div>
           <h3 class="font-semibold">Share the link & play</h3>
-          <p class="mt-2 text-sm text-gray-600">Host gets a link. Friends join on their phones. 30‑second turns keep the game snappy.</p>
+          <p class="mt-2 text-sm text-slate-300">Host gets a link. Friends join on their phones. 30‑second turns keep the game snappy.</p>
         </div>
+      </div>
+      <div class="mt-10 rounded-2xl border border-slate-800 bg-slate-900 overflow-hidden">
+        <img src="https://dummyimage.com/1600x900/0b1220/ffffff&text=Walkthrough+Screenshot" alt="Walkthrough screenshot" class="w-full h-auto"/>
       </div>
     </div>
   </section>
@@ -272,96 +266,92 @@
   <!-- Demo embed placeholder -->
   <section id="demo" class="py-8">
     <div class="max-w-5xl mx-auto px-6 lg:px-8">
-      <div class="aspect-video rounded-2xl border border-gray-200 bg-gray-50 grid place-items-center text-gray-500">Demo video placeholder</div>
+      <div class="aspect-video rounded-2xl border border-slate-800 bg-slate-900 grid place-items-center text-slate-400">Demo video placeholder</div>
     </div>
   </section>
 
   <!-- Pricing -->
-  <section id="pricing" class="py-16 border-t border-gray-100">
+  <section id="pricing" class="py-16 border-t border-slate-800">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
         <h2 class="text-3xl font-bold tracking-tight">Simple, generous pricing</h2>
-        <p class="mt-3 text-gray-600">Free during MVP. Pro adds advanced templates when we launch.</p>
+        <p class="mt-3 text-slate-300">Free during MVP. Pro adds advanced templates when we launch.</p>
       </div>
       <div class="mt-10 grid md:grid-cols-2 gap-6">
-        <!-- Free -->
-        <div class="rounded-2xl border border-gray-200 p-6">
+        <div class="rounded-2xl border border-slate-800 p-6 bg-slate-900/60">
           <h3 class="text-xl font-semibold">Free (MVP)</h3>
-          <p class="mt-1 text-gray-600">Best for party nights and team icebreakers.</p>
-          <div class="mt-4 text-4xl font-extrabold tracking-tight">$0</div>
-          <ul class="mt-4 space-y-2 text-sm text-gray-700">
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> AI‑generated decks</li>
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Up to 8 players</li>
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Phone join + spectator chat</li>
+          <p class="mt-1 text-slate-300">Best for party nights and team icebreakers.</p>
+          <div class="mt-4 text-4xl font-extrabold tracking-tight text-white">$0</div>
+          <ul class="mt-4 space-y-2 text-sm text-slate-200">
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span> AI‑generated decks</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span> Up to 8 players</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span> Phone join + spectator chat</li>
           </ul>
           <a href="#get-started" class="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-600 px-5 py-3 text-white font-semibold hover:bg-brand-700">Start free</a>
         </div>
-        <!-- Pro -->
-        <div class="rounded-2xl border border-gray-200 p-6">
+        <div class="rounded-2xl border border-slate-800 p-6 bg-slate-900/60">
           <h3 class="text-xl font-semibold">Pro (Coming Soon)</h3>
-          <p class="mt-1 text-gray-600">For communities and creators who want more.</p>
-          <div class="mt-4 text-4xl font-extrabold tracking-tight">$9<span class="text-base font-medium text-gray-500">/mo</span></div>
-          <ul class="mt-4 space-y-2 text-sm text-gray-700">
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> Template library & styles</li>
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> Save & remix decks</li>
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> Priority generation</li>
+          <p class="mt-1 text-slate-300">For communities and creators who want more.</p>
+          <div class="mt-4 text-4xl font-extrabold tracking-tight text-white">$9<span class="text-base font-medium text-slate-400">/mo</span></div>
+          <ul class="mt-4 space-y-2 text-sm text-slate-200">
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-indigo-400 rounded-full"></span> Template library & styles</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-indigo-400 rounded-full"></span> Save & remix decks</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-indigo-400 rounded-full"></span> Priority generation</li>
           </ul>
-          <a href="#get-started" class="mt-6 inline-flex items-center gap-2 rounded-xl border border-gray-300 px-5 py-3 font-semibold hover:bg-gray-50">Join waitlist</a>
+          <a href="#get-started" class="mt-6 inline-flex items-center gap-2 rounded-xl border border-slate-700 px-5 py-3 font-semibold hover:bg-slate-800">Join waitlist</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ (Accordion) -->
+  <!-- FAQ -->
   <section id="faq" class="py-16">
     <div class="max-w-4xl mx-auto px-6 lg:px-8">
       <h2 class="text-3xl font-bold tracking-tight text-center">FAQs</h2>
-      <div class="mt-8 divide-y divide-gray-200" id="faq-accordion">
+      <div class="mt-8 divide-y divide-slate-800" id="faq-accordion">
         <details class="group py-4">
-          <summary class="flex cursor-pointer list-none items-center justify-between text-left font-medium">What is Cardival?<span class="ml-4 text-gray-400 group-open:rotate-180 transition"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span></summary>
-          <div class="mt-2 text-gray-600">An AI‑powered party card game generator. Upload names → get a personalized UNO‑style game in seconds.</div>
+          <summary class="flex cursor-pointer list-none items-center justify-between text-left font-medium">What is Cardival?<span class="ml-4 text-slate-500 group-open:rotate-180 transition"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span></summary>
+          <div class="mt-2 text-slate-300">An AI‑powered party card game generator. Upload names → get a personalized UNO‑style game in seconds.</div>
         </details>
         <details class="group py-4">
-          <summary class="flex cursor-pointer list-none items-center justify-between text-left font-medium">Do players need to install an app?<span class="ml-4 text-gray-400 group-open:rotate-180 transition"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span></summary>
-          <div class="mt-2 text-gray-600">No. Players join via a link in their mobile browser.</div>
+          <summary class="flex cursor-pointer list-none items-center justify-between text-left font-medium">Do players need to install an app?<span class="ml-4 text-slate-500 group-open:rotate-180 transition"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span></summary>
+          <div class="mt-2 text-slate-300">No. Players join via a link in their mobile browser.</div>
         </details>
         <details class="group py-4">
-          <summary class="flex cursor-pointer list-none items-center justify-between text-left font-medium">How many people can play?<span class="ml-4 text-gray-400 group-open:rotate-180 transition"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span></summary>
-          <div class="mt-2 text-gray-600">2–8 players plus spectators.</div>
+          <summary class="flex cursor-pointer list-none items-center justify-between text-left font-medium">How many people can play?<span class="ml-4 text-slate-500 group-open:rotate-180 transition"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span></summary>
+          <div class="mt-2 text-slate-300">2–8 players plus spectators.</div>
         </details>
         <details class="group py-4">
-          <summary class="flex cursor-pointer list-none items-center justify-between text-left font-medium">Is it free?<span class="ml-4 text-gray-400 group-open:rotate-180 transition"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span></summary>
-          <div class="mt-2 text-gray-600">Yes during MVP. Pro features like template libraries will be available later.</div>
+          <summary class="flex cursor-pointer list-none items-center justify-between text-left font-medium">Is it free?<span class="ml-4 text-slate-500 group-open:rotate-180 transition"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span></summary>
+          <div class="mt-2 text-slate-300">Yes during MVP. Pro features like template libraries will be available later.</div>
         </details>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t border-gray-100 py-10">
+  <footer class="border-t border-slate-800 py-10">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4">
         <div class="flex items-center gap-2">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" class="fill-brand-600/10"/><path d="M8 8h8M8 12h6M8 16h4" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" class="fill-brand-600/20"/><path d="M8 8h8M8 12h6M8 16h4" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/></svg>
           <span class="font-semibold">Cardival</span>
         </div>
-        <p class="text-sm text-gray-500">© <span id="year"></span> Cardival. All rights reserved.</p>
+        <p class="text-sm text-slate-400">© <span id="year"></span> Cardival. All rights reserved.</p>
       </div>
     </div>
   </footer>
 </main>
 
-<!-- ========================= -->
 <!-- Scripts -->
-<!-- ========================= -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.js" integrity="sha512-8b0nk0pH2e4f9QmKcP1qv+q4a8w4E8kq7oZb5uQk1i8W7k5lJ7g9n2xZb5b6cU+W7j8n1sS0XvVv1MZ2JpQv+Q==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 <script>
-  // Simple mobile menu toggle
+  // Mobile menu toggle
   const menuBtn = document.getElementById('menuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   menuBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
-  // Tiny two-page hash router (#home / #learn)
+  // Hash router (#home / #learn and section anchors)
   const pages = { home: document.getElementById('home-page'), learn: document.getElementById('learn-page') };
   function setPage() {
     const hash = (location.hash.replace('#','')||'home');
@@ -374,6 +364,16 @@
 
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Theme toggle (persist in localStorage)
+  const themeToggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') html.classList.remove('dark');
+  themeToggle?.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+  });
 </script>
 
 </body>
