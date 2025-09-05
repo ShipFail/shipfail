@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ScribeFleet — Docs that ship themselves</title>
+  <meta name="description" content="ScribeFleet turns your codebase into living documentation using Claude Code sub‑agents, Diátaxis structure, and Docusaurus publishing. Pre‑MVP waitlist." />
+  <meta property="og:title" content="ScribeFleet — Docs that ship themselves" />
+  <meta property="og:description" content="Agent‑driven docs: generate, test, and PR Diátaxis‑clean documentation for your OSS repo." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#10b981" />
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind config (brand tint)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#10b981', // emerald-500
+              50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7',
+              400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b'
+            }
+          },
+          boxShadow: {
+            soft: '0 10px 25px -15px rgba(16,185,129,.5)'
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Flowbite (Marketing UI components rely on Tailwind classes; JS adds interactivity) -->
+  <script defer src="https://unpkg.com/flowbite@2.5.1/dist/flowbite.min.js"></script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style> html { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif } </style>
+  <script>
+    // Dark mode preference
+    (function() {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const stored = localStorage.getItem('sf-theme');
+      if ((stored === 'dark') || (!stored && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+</head>
+<body class="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+  <!-- Skip link -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 bg-brand text-white px-3 py-2 rounded-md">Skip to content</a>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40 border-b border-gray-100/80 dark:border-gray-800/60 backdrop-blur bg-white/80 dark:bg-gray-900/70">
+    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="h-9 w-9 rounded-2xl bg-brand/10 flex items-center justify-center ring-1 ring-brand/20">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="text-brand">
+              <path d="M5 12c0-3.866 3.134-7 7-7 1.657 0 3.176.574 4.366 1.536L21 5l-1.536 4.634A6.963 6.963 0 0 1 19 12c0 3.866-3.134 7-7 7a7 7 0 0 1-7-7Z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <a href="#" class="text-xl font-extrabold tracking-tight">ScribeFleet</a>
+        </div>
+        <div class="hidden md:flex items-center gap-8 text-sm">
+          <a href="#features" class="hover:text-brand">Features</a>
+          <a href="#how" class="hover:text-brand">How it works</a>
+          <a href="#diataxis" class="hover:text-brand">Diátaxis</a>
+          <a href="#agents" class="hover:text-brand">Agents</a>
+          <a href="#faq" class="hover:text-brand">FAQ</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="themeToggle" class="inline-flex items-center justify-center rounded-lg border border-gray-200/70 dark:border-gray-700 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800" aria-label="Toggle theme">
+            <svg class="h-4 w-4 hidden dark:block" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="1.5"/></svg>
+            <svg class="h-4 w-4 dark:hidden" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2m0 16v2M22 12h-2M4 12H2m15.536-7.536-1.414 1.414M7.879 16.121l-1.414 1.414m11.313 0-1.414-1.414M7.879 7.879 6.465 6.465" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <a href="#waitlist" data-modal-target="waitlistModal" data-modal-toggle="waitlistModal" class="hidden sm:inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2 text-white font-semibold shadow-soft hover:bg-brand-600">
+            Join waitlist
+          </a>
+          <a href="https://github.com/" class="inline-flex items-center gap-2 rounded-lg border border-gray-200/70 dark:border-gray-700 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.522 2 12a10 10 0 0 0 6.838 9.487c.5.092.682-.217.682-.483 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.341-3.369-1.341-.455-1.157-1.11-1.466-1.11-1.466-.908-.62.069-.607.069-.607 1.004.07 1.532 1.032 1.532 1.032.892 1.528 2.341 1.087 2.91.832.091-.646.35-1.087.636-1.337-2.22-.253-4.555-1.112-4.555-4.946 0-1.092.39-1.986 1.029-2.686-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.56 9.56 0 0 1 2.504.337c1.909-1.296 2.748-1.026 2.748-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.594 1.028 2.686 0 3.842-2.338 4.69-4.565 4.939.36.31.68.92.68 1.855 0 1.337-.012 2.417-.012 2.747 0 .268.18.58.688.481A10.003 10.003 0 0 0 22 12c0-5.478-4.477-10-10-10Z" clip-rule="evenodd"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-brand/5 to-transparent py-16 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid items-center gap-12 lg:grid-cols-2">
+          <div>
+            <span class="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-white/60 px-3 py-1 text-xs font-medium text-brand ring-1 ring-brand/10 backdrop-blur dark:bg-gray-900/50">Pre‑MVP • Private waitlist</span>
+            <h1 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">Docs that <span class="text-brand">ship themselves</span>.</h1>
+            <p class="mt-4 text-lg leading-7 text-gray-600 dark:text-gray-300">ScribeFleet turns your codebase into living documentation. Claude Code sub‑agents generate, test, and PR Diátaxis‑clean docs, published via Docusaurus—kept fresh on every change.</p>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a data-modal-target="waitlistModal" data-modal-toggle="waitlistModal" class="inline-flex cursor-pointer items-center justify-center rounded-lg bg-brand px-5 py-3 text-base font-semibold text-white shadow-soft hover:bg-brand-600">Join the waitlist</a>
+              <a data-modal-target="demoModal" data-modal-toggle="demoModal" class="inline-flex cursor-pointer items-center justify-center rounded-lg border border-gray-200/70 px-5 py-3 text-base font-semibold hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">See a preview</a>
+            </div>
+            <div class="mt-6 text-sm text-gray-500 dark:text-gray-400">Built for OSS maintainers, developers, and stakeholders who want docs that don’t decay.</div>
+          </div>
+          <div class="relative">
+            <!-- Placeholder product preview -->
+            <div class="rounded-2xl border border-gray-200/80 bg-white p-4 shadow-soft ring-1 ring-gray-100 dark:border-gray-800 dark:bg-gray-900 dark:ring-gray-800">
+              <div class="rounded-xl bg-gray-50 p-4 dark:bg-gray-800">
+                <svg viewBox="0 0 800 480" class="w-full rounded-lg" role="img" aria-label="ScribeFleet preview">
+                  <defs>
+                    <linearGradient id="g" x1="0" x2="1">
+                      <stop offset="0%" stop-color="#ecfdf5" />
+                      <stop offset="100%" stop-color="#d1fae5" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="800" height="480" fill="url(#g)" />
+                  <rect x="36" y="40" width="220" height="28" rx="8" fill="#10b981" opacity=".8"/>
+                  <rect x="36" y="90" width="728" height="320" rx="14" fill="#fff" stroke="#d1fae5"/>
+                  <rect x="60" y="120" width="180" height="16" rx="4" fill="#10b981" opacity=".7"/>
+                  <rect x="60" y="150" width="300" height="10" rx="4" fill="#a7f3d0"/>
+                  <rect x="60" y="180" width="300" height="10" rx="4" fill="#a7f3d0"/>
+                  <rect x="60" y="210" width="300" height="10" rx="4" fill="#a7f3d0"/>
+                  <rect x="396" y="130" width="340" height="220" rx="8" fill="#ecfdf5" stroke="#a7f3d0"/>
+                  <text x="72" y="370" fill="#047857" font-size="14" font-family="Inter, sans-serif">docs/ — tutorials · how‑to · reference · explanation</text>
+                  <text x="410" y="190" fill="#047857" font-size="14" font-family="Inter, sans-serif">PR Preview ✓</text>
+                </svg>
+              </div>
+              <div class="mt-3 grid grid-cols-3 gap-2 text-xs text-gray-500 dark:text-gray-400">
+                <div class="flex items-center gap-2 rounded-lg border border-gray-200/70 px-3 py-2 dark:border-gray-700"><span class="h-2 w-2 rounded-full bg-green-500"></span> CI: Docs build passed</div>
+                <div class="flex items-center gap-2 rounded-lg border border-gray-200/70 px-3 py-2 dark:border-gray-700"><span class="h-2 w-2 rounded-full bg-green-500"></span> Examples tested</div>
+                <div class="flex items-center gap-2 rounded-lg border border-gray-200/70 px-3 py-2 dark:border-gray-700"><span class="h-2 w-2 rounded-full bg-green-500"></span> Quadrant checks</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social proof (placeholder logos) -->
+        <div class="mt-14 grid grid-cols-2 gap-6 text-gray-500 sm:grid-cols-4 lg:grid-cols-6 dark:text-gray-400">
+          <div class="text-sm">Wechaty</div>
+          <div class="text-sm">Open Source</div>
+          <div class="text-sm">Docusaurus</div>
+          <div class="text-sm">Diátaxis</div>
+          <div class="text-sm">Claude Code</div>
+          <div class="text-sm">GitHub Actions</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM / SOLUTION -->
+    <section id="features" class="py-16 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-12 lg:grid-cols-2">
+          <div class="self-center">
+            <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">Docs rot. <span class="text-brand">ScribeFleet fixes drift.</span></h2>
+            <p class="mt-4 text-gray-600 dark:text-gray-300">Outdated pages, mixed styles, scattered examples—newcomers bounce and maintainers burn out. ScribeFleet keeps docs accurate, approachable, and always current.</p>
+            <ul class="mt-6 space-y-3 text-gray-700 dark:text-gray-200">
+              <li class="flex items-start gap-3"><span class="mt-1 h-5 w-5 rounded-full bg-brand/15 text-brand flex items-center justify-center">✓</span><span><strong>Change‑aware</strong>: watches API & config diffs, opens update PRs.</span></li>
+              <li class="flex items-start gap-3"><span class="mt-1 h-5 w-5 rounded-full bg-brand/15 text-brand flex items-center justify-center">✓</span><span><strong>Diátaxis clean</strong>: tutorials, how‑to, reference, explanation stay separated.</span></li>
+              <li class="flex items-start gap-3"><span class="mt-1 h-5 w-5 rounded-full bg-brand/15 text-brand flex items-center justify-center">✓</span><span><strong>Tested examples</strong>: doctest‑style checks verify every code block.</span></li>
+            </ul>
+            <div class="mt-8">
+              <a data-modal-target="waitlistModal" data-modal-toggle="waitlistModal" class="inline-flex cursor-pointer items-center rounded-lg bg-brand px-5 py-3 font-semibold text-white shadow-soft hover:bg-brand-600">Get early access</a>
+            </div>
+          </div>
+          <div>
+            <div class="grid gap-6 sm:grid-cols-2">
+              <div class="rounded-2xl border border-gray-200/80 p-6 shadow-sm dark:border-gray-800">
+                <h3 class="font-semibold">Docs linter</h3>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Blocks merges when a tutorial looks like a reference page (and vice versa).</p>
+              </div>
+              <div class="rounded-2xl border border-gray-200/80 p-6 shadow-sm dark:border-gray-800">
+                <h3 class="font-semibold">Reference from code</h3>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Facts only—symbols, signatures, params, returns. No opinions.</p>
+              </div>
+              <div class="rounded-2xl border border-gray-200/80 p-6 shadow-sm dark:border-gray-800">
+                <h3 class="font-semibold">PR previews</h3>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Docusaurus build + link checks + screenshots attached to each PR.</p>
+              </div>
+              <div class="rounded-2xl border border-gray-200/80 p-6 shadow-sm dark:border-gray-800">
+                <h3 class="font-semibold">Human‑in‑the‑loop</h3>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Maintainers approve; the fleet keeps sailing on the next change.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIÁTAXIS QUADRANTS -->
+    <section id="diataxis" class="py-16 sm:py-24 bg-gray-50 dark:bg-gray-800/30">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="sm:flex sm:items-end sm:justify-between">
+          <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">Clear docs, by design</h2>
+          <p class="mt-2 text-gray-600 dark:text-gray-300">Diátaxis keeps purpose and style crisp. Readers know what to expect on each page.</p>
+        </div>
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <!-- Tutorial -->
+          <div class="rounded-2xl border border-gray-200/80 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div class="h-10 w-10 rounded-lg bg-brand/10 text-brand flex items-center justify-center">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h10M4 18h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="mt-4 font-semibold">Tutorials</h3>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Happy‑path lessons with checkpoints: “You should see…”.</p>
+          </div>
+          <!-- How-to -->
+          <div class="rounded-2xl border border-gray-200/80 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div class="h-10 w-10 rounded-lg bg-brand/10 text-brand flex items-center justify-center">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none"><path d="M6 7h12M6 12h9M6 17h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="mt-4 font-semibold">How‑to guides</h3>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">One job per page. Problem → steps → verification → pitfalls.</p>
+          </div>
+          <!-- Reference -->
+          <div class="rounded-2xl border border-gray-200/80 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div class="h-10 w-10 rounded-lg bg-brand/10 text-brand flex items-center justify-center">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none"><path d="M7 5h10v14H7z" stroke="currentColor" stroke-width="1.5"/><path d="M10 8h4M10 12h4M10 16h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="mt-4 font-semibold">Reference</h3>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Facts from code: signatures, params, returns, examples.</p>
+          </div>
+          <!-- Explanation -->
+          <div class="rounded-2xl border border-gray-200/80 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div class="h-10 w-10 rounded-lg bg-brand/10 text-brand flex items-center justify-center">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none"><path d="M12 3v4m0 10v4M3 12h4m10 0h4M7.757 7.757l2.829 2.829m2.828 2.828 2.829 2.829" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="mt-4 font-semibold">Explanation</h3>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Concepts, tradeoffs, architecture. No steps, no API tables.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="py-16 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="sm:flex sm:items-end sm:justify-between">
+          <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">From code to PR in four steps</h2>
+          <p class="mt-2 text-gray-600 dark:text-gray-300">No more stale pages. Keep docs moving with your code.</p>
+        </div>
+        <ol class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <li class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-brand/10 text-brand font-bold">1</span>
+            <h3 class="mt-4 font-semibold">Connect your repo</h3>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Grant read & PR permissions. Import symbols and JSDoc.</p>
+          </li>
+          <li class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-brand/10 text-brand font-bold">2</span>
+            <h3 class="mt-4 font-semibold">Generate & test</h3>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Reference from code. Tutorials/How‑tos with runnable examples.</p>
+          </li>
+          <li class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-brand/10 text-brand font-bold">3</span>
+            <h3 class="mt-4 font-semibold">Preview PR</h3>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Docusaurus build + link checks + screenshots attached.</p>
+          </li>
+          <li class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-brand/10 text-brand font-bold">4</span>
+            <h3 class="mt-4 font-semibold">Merge & monitor</h3>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Changelog watcher opens follow‑up PRs on code changes.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- AGENTS -->
+    <section id="agents" class="py-16 sm:py-24 bg-gray-50 dark:bg-gray-800/30">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="sm:flex sm:items-end sm:justify-between">
+          <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">Your sub‑agent fleet</h2>
+          <p class="mt-2 text-gray-600 dark:text-gray-300">Specialists with clear contracts—kept honest by CI.</p>
+        </div>
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <h3 class="font-semibold">Doc Architect</h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Backlog planner. Routes work by quadrant. No content writing.</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <h3 class="font-semibold">Reference Extractor</h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Symbols → signatures → examples. Facts only from code.</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <h3 class="font-semibold">Tutorial Chef</h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Happy‑path lessons with checkpoints and next steps.</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <h3 class="font-semibold">How‑to Writer</h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">One job per page. Task‑oriented recipes.</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <h3 class="font-semibold">Explainer</h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Architecture, tradeoffs, rationale—no steps, no matrices.</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <h3 class="font-semibold">Stylekeeper</h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Lints tone, headings, links, and quadrant purity.</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <h3 class="font-semibold">Publisher</h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Builds site, posts PR previews, assigns reviewers.</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <h3 class="font-semibold">Changelog Watcher</h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Diffs public surfaces. Opens follow‑up PRs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCHITECTURE DIAGRAM -->
+    <section class="py-16 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">Architecture at a glance</h2>
+        <p class="mt-2 text-gray-600 dark:text-gray-300">Repo‑native agents generate docs, CI validates, Docusaurus publishes, PR keeps humans in control.</p>
+        <div class="mt-8 rounded-2xl border border-gray-200/80 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+          <svg viewBox="0 0 1100 360" class="w-full" role="img" aria-label="Architecture diagram">
+            <defs>
+              <linearGradient id="lg" x1="0" x2="1">
+                <stop offset="0%" stop-color="#ecfdf5" />
+                <stop offset="100%" stop-color="#d1fae5" />
+              </linearGradient>
+            </defs>
+            <rect x="20" y="40" width="240" height="80" rx="14" fill="#fff" stroke="#a7f3d0" />
+            <text x="40" y="80" fill="#047857" font-size="16" font-family="Inter, sans-serif">Repo & Code (JSDoc)</text>
+            <rect x="20" y="160" width="240" height="80" rx="14" fill="#fff" stroke="#a7f3d0" />
+            <text x="40" y="200" fill="#047857" font-size="16" font-family="Inter, sans-serif">Issues & Changelog</text>
+
+            <rect x="300" y="40" width="200" height="200" rx="14" fill="url(#lg)" stroke="#34d399" />
+            <text x="320" y="80" fill="#065f46" font-size="16" font-family="Inter, sans-serif">Claude Code</text>
+            <text x="320" y="105" fill="#065f46" font-size="13" font-family="Inter, sans-serif">Sub‑agents</text>
+            <text x="320" y="130" fill="#065f46" font-size="12" font-family="Inter, sans-serif">• Reference Extractor</text>
+            <text x="320" y="150" fill="#065f46" font-size="12" font-family="Inter, sans-serif">• Tutorial / How‑to</text>
+            <text x="320" y="170" fill="#065f46" font-size="12" font-family="Inter, sans-serif">• Explainer • Linter</text>
+
+            <rect x="540" y="40" width="220" height="120" rx="14" fill="#fff" stroke="#a7f3d0" />
+            <text x="560" y="80" fill="#047857" font-size="16" font-family="Inter, sans-serif">Docs/ (Diátaxis)</text>
+            <text x="560" y="105" fill="#047857" font-size="12" font-family="Inter, sans-serif">tutorials · how‑to · reference · explanation</text>
+
+            <rect x="540" y="190" width="220" height="80" rx="14" fill="#fff" stroke="#a7f3d0" />
+            <text x="560" y="230" fill="#047857" font-size="16" font-family="Inter, sans-serif">CI: build + tests</text>
+
+            <rect x="800" y="40" width="260" height="120" rx="14" fill="#fff" stroke="#a7f3d0" />
+            <text x="820" y="80" fill="#047857" font-size="16" font-family="Inter, sans-serif">PR Preview</text>
+            <text x="820" y="105" fill="#047857" font-size="12" font-family="Inter, sans-serif">link checks • screenshots • assignments</text>
+
+            <rect x="800" y="190" width="260" height="80" rx="14" fill="#fff" stroke="#a7f3d0" />
+            <text x="820" y="230" fill="#047857" font-size="16" font-family="Inter, sans-serif">Docusaurus Site</text>
+
+            <!-- arrows -->
+            <defs>
+              <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+                <path d="M0,0 L8,4 L0,8 Z" fill="#34d399" />
+              </marker>
+            </defs>
+            <line x1="260" y1="80" x2="300" y2="80" stroke="#34d399" stroke-width="2" marker-end="url(#arrow)" />
+            <line x1="260" y1="200" x2="300" y2="200" stroke="#34d399" stroke-width="2" marker-end="url(#arrow)" />
+            <line x1="500" y1="140" x2="540" y2="140" stroke="#34d399" stroke-width="2" marker-end="url(#arrow)" />
+            <line x1="760" y1="140" x2="800" y2="140" stroke="#34d399" stroke-width="2" marker-end="url(#arrow)" />
+            <line x1="650" y1="230" x2="800" y2="230" stroke="#34d399" stroke-width="2" marker-end="url(#arrow)" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- METRICS / SOCIAL PROOF -->
+    <section class="py-16 sm:py-24 bg-gray-50 dark:bg-gray-800/30">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-8 sm:grid-cols-3">
+          <div class="rounded-2xl border border-gray-200/80 p-6 text-center dark:border-gray-800">
+            <div class="text-4xl font-extrabold text-brand" data-count="10" id="ttfs">10</div>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">minutes to first success</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200/80 p-6 text-center dark:border-gray-800">
+            <div class="text-4xl font-extrabold text-brand" data-count="95" id="doctest">95%</div>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">example doctest pass rate</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200/80 p-6 text-center dark:border-gray-800">
+            <div class="text-4xl font-extrabold text-brand" data-count="50" id="pr">50%</div>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">faster docs PR turnaround</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="py-16 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl">
+          <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">Simple early pricing</h2>
+          <p class="mt-2 text-gray-600 dark:text-gray-300">Start free for open source. Pro features later for teams who want hosted previews and analytics.</p>
+        </div>
+        <div class="mt-10 grid gap-6 sm:grid-cols-2">
+          <div class="rounded-2xl border border-gray-200/80 p-6 dark:border-gray-800">
+            <h3 class="text-lg font-semibold">Open Source — Free</h3>
+            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-300">
+              <li>• Repo‑native agents</li>
+              <li>• Diátaxis linter</li>
+              <li>• Docusaurus build & PR previews</li>
+              <li>• Basic doctest runner</li>
+            </ul>
+            <div class="mt-6">
+              <a data-modal-target="waitlistModal" data-modal-toggle="waitlistModal" class="inline-flex cursor-pointer items-center rounded-lg bg-brand px-5 py-3 font-semibold text-white shadow-soft hover:bg-brand-600">Join waitlist</a>
+            </div>
+          </div>
+          <div class="rounded-2xl border border-brand/30 p-6 shadow-soft">
+            <h3 class="text-lg font-semibold">Pro / Cloud — Coming Soon</h3>
+            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-300">
+              <li>• Managed previews & review apps</li>
+              <li>• Analytics: TTFS, doc coverage, link health</li>
+              <li>• Embedding search over docs + code symbols</li>
+              <li>• Multi‑repo manifests & i18n pipelines</li>
+            </ul>
+            <div class="mt-6">
+              <a data-modal-target="waitlistModal" data-modal-toggle="waitlistModal" class="inline-flex cursor-pointer items-center rounded-lg border border-brand/40 px-5 py-3 font-semibold hover:bg-brand/10">Get notified</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-16 sm:py-24 bg-gray-50 dark:bg-gray-800/30">
+      <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">FAQ</h2>
+        <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
+          <h3 id="acc-1">
+            <button type="button" class="flex w-full items-center justify-between py-5 text-left text-gray-500 border-b border-gray-200 dark:border-gray-700" data-accordion-target="#acc-1-panel" aria-expanded="false" aria-controls="acc-1-panel">
+              <span>Is ScribeFleet open source?</span>
+              <svg class="w-4 h-4 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/></svg>
+            </button>
+          </h3>
+          <div id="acc-1-panel" class="hidden" aria-labelledby="acc-1">
+            <div class="py-5 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300">Core templates and linter rules will be Apache‑2.0. Cloud features may be licensed separately.</div>
+          </div>
+
+          <h3 id="acc-2">
+            <button type="button" class="flex w-full items-center justify-between py-5 text-left text-gray-500 border-b border-gray-200 dark:border-gray-700" data-accordion-target="#acc-2-panel" aria-expanded="false" aria-controls="acc-2-panel">
+              <span>Which repos does it support?</span>
+              <svg class="w-4 h-4 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/></svg>
+            </button>
+          </h3>
+          <div id="acc-2-panel" class="hidden" aria-labelledby="acc-2">
+            <div class="py-5 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300">Start with TypeScript/JavaScript (Wechaty core). Roadmap: Python, Go, Java SDKs via adapters.</div>
+          </div>
+
+          <h3 id="acc-3">
+            <button type="button" class="flex w-full items-center justify-between py-5 text-left text-gray-500 border-b border-gray-200 dark:border-gray-700" data-accordion-target="#acc-3-panel" aria-expanded="false" aria-controls="acc-3-panel">
+              <span>How do you prevent hallucinations?</span>
+              <svg class="w-4 h-4 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/></svg>
+            </button>
+          </h3>
+          <div id="acc-3-panel" class="hidden" aria-labelledby="acc-3">
+            <div class="py-5 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300">Reference pages are code‑extracted only; doctest runs examples; CI blocks mixed‑type pages.</div>
+          </div>
+
+          <h3 id="acc-4">
+            <button type="button" class="flex w-full items-center justify-between py-5 text-left text-gray-500 border-b border-gray-200 dark:border-gray-700" data-accordion-target="#acc-4-panel" aria-expanded="false" aria-controls="acc-4-panel">
+              <span>What does the MVP include?</span>
+              <svg class="w-4 h-4 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/></svg>
+            </button>
+          </h3>
+          <div id="acc-4-panel" class="hidden" aria-labelledby="acc-4">
+            <div class="py-5 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300">Docusaurus skeleton, sub‑agent definitions, reference generation for core symbols, starter tutorials/how‑tos, and CI with previews.</div>
+          </div>
+        </div>
+        <div class="mt-10 text-center">
+          <a data-modal-target="waitlistModal" data-modal-toggle="waitlistModal" class="inline-flex cursor-pointer items-center justify-center rounded-lg bg-brand px-5 py-3 text-base font-semibold text-white shadow-soft hover:bg-brand-600">Join the waitlist</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-gray-100 dark:border-gray-800">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+        <div class="flex items-center gap-3">
+          <div class="h-8 w-8 rounded-xl bg-brand/10 flex items-center justify-center ring-1 ring-brand/20">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="text-brand"><path d="M5 12c0-3.866 3.134-7 7-7 1.657 0 3.176.574 4.366 1.536L21 5l-1.536 4.634A6.963 6.963 0 0 1 19 12c0 3.866-3.134 7-7 7a7 7 0 0 1-7-7Z" stroke="currentColor" stroke-width="1.5"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <span class="font-semibold">ScribeFleet</span>
+        </div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">© <span id="year"></span> ScribeFleet. Built with ❤️ for OSS maintainers.</div>
+        <div class="flex gap-4 text-sm">
+          <a href="#pricing" class="hover:text-brand">Pricing</a>
+          <a href="#faq" class="hover:text-brand">FAQ</a>
+          <a href="#" class="hover:text-brand">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WAITLIST MODAL -->
+  <div id="waitlistModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[100dvh] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div class="relative bg-white rounded-2xl shadow dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800">
+        <button type="button" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200" data-modal-hide="waitlistModal" aria-label="Close"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold">Join the waitlist</h3>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Get early access and help us shape the MVP.</p>
+          <form id="waitlistForm" class="mt-5 space-y-3">
+            <div>
+              <label for="email" class="mb-1 block text-sm font-medium">Email</label>
+              <input id="email" name="email" type="email" required placeholder="you@example.com" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 outline-none focus:ring-2 focus:ring-brand" />
+            </div>
+            <div>
+              <label for="project" class="mb-1 block text-sm font-medium">Project / Org (optional)</label>
+              <input id="project" name="project" type="text" placeholder="e.g., wechaty/wechaty" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 outline-none focus:ring-2 focus:ring-brand" />
+            </div>
+            <button class="w-full rounded-lg bg-brand px-4 py-2 font-semibold text-white hover:bg-brand-600">Request invite</button>
+            <p id="waitlistOk" class="hidden text-sm text-green-600">Thanks! You’re on the list. We’ll be in touch.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEMO MODAL -->
+  <div id="demoModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[100dvh] max-h-full">
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+      <div class="relative bg-white rounded-2xl shadow dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800">
+        <button type="button" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200" data-modal-hide="demoModal" aria-label="Close"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold">Preview (concept)</h3>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">A short walkthrough of the proposed flow. Full demo will connect to a sample repo.</p>
+          <ol class="mt-4 space-y-2 text-sm text-gray-700 dark:text-gray-200 list-decimal list-inside">
+            <li>Connect GitHub repo with PR scope.</li>
+            <li>Generate Reference from code. Draft Tutorials & How‑tos.</li>
+            <li>Run doctest, build Docusaurus, open PR with preview link.</li>
+            <li>Review, merge, and let Changelog Watcher keep docs fresh.</li>
+          </ol>
+          <div class="mt-4 rounded-lg border border-dashed border-gray-300 p-4 text-center text-sm text-gray-500 dark:border-gray-700">Demo video placeholder</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple counters (cosmetic)
+    function animateCount(id, target, suffix='') {
+      const el = document.getElementById(id);
+      if (!el) return;
+      let start = 0; const step = Math.max(1, Math.floor(target/60));
+      const timer = setInterval(() => { start += step; if (start >= target) { start = target; clearInterval(timer);} el.textContent = suffix ? `${start}${suffix}` : `${start}`; }, 16);
+    }
+    window.addEventListener('load', () => {
+      animateCount('ttfs', 10);
+      animateCount('doctest', 95, '%');
+      animateCount('pr', 50, '%');
+      document.getElementById('year').textContent = new Date().getFullYear();
+    });
+
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const html = document.documentElement; const dark = html.classList.toggle('dark');
+      localStorage.setItem('sf-theme', dark ? 'dark' : 'light');
+    });
+
+    // Waitlist form (local demo)
+    document.getElementById('waitlistForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      if (!email) return;
+      const existing = JSON.parse(localStorage.getItem('sf-waitlist') || '[]');
+      existing.push({ email, project: document.getElementById('project').value.trim(), ts: Date.now() });
+      localStorage.setItem('sf-waitlist', JSON.stringify(existing));
+      document.getElementById('waitlistOk').classList.remove('hidden');
+      setTimeout(() => { document.querySelector('[data-modal-hide="waitlistModal"]').click(); }, 1200);
+    });
+  </script>
+</body>
+</html>
