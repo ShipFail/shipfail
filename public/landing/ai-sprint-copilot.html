@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Sprint Copilot — Expert Sprint Facilitation on Demand</title>
+  <meta name="description" content="Clarify strategy in 48 hours, then prototype and test in 5 days. AI Sprint Copilot is the world's first AI-powered facilitator for Foundation & Google Design Sprints." />
+  <meta property="og:title" content="AI Sprint Copilot — Expert Sprint Facilitation on Demand" />
+  <meta property="og:description" content="Clarify strategy in 48 hours, then prototype and test in 5 days. The world's first AI-powered facilitator for Foundation & Google Design Sprints." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://dummyimage.com/1200x630/0f172a/ffffff&text=AI+Sprint+Copilot" />
+  <meta name="theme-color" content="#10B981" />
+
+  <!-- Tailwind CSS + Flowbite -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981', // emerald vibe
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            }
+          },
+          boxShadow: {
+            soft: '0 10px 30px -12px rgba(16,185,129,0.35)'
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.css" rel="stylesheet" />
+
+  <style>
+    /* Smooth anchor scrolling */
+    html { scroll-behavior: smooth; }
+    /* Progress bar */
+    #scrollProgress { position: fixed; top: 0; left: 0; height: 4px; background: linear-gradient(90deg, #10b981, #34d399); width: 0; z-index: 60; }
+  </style>
+</head>
+<body class="bg-white text-slate-900">
+  <!-- Scroll progress -->
+  <div id="scrollProgress"></div>
+
+  <!-- Announcement bar -->
+  <div class="relative isolate w-full bg-slate-900 text-white">
+    <div class="mx-auto max-w-screen-xl px-4 py-2 text-center text-sm flex items-center justify-center gap-2">
+      <span class="inline-flex items-center rounded-full bg-brand-500/20 px-2 py-0.5 ring-1 ring-brand-400/40">Founders Club</span>
+      <span>First 50 teams get lifetime 40% off · Early access now open</span>
+      <a href="#pricing" class="ml-2 inline-flex items-center text-brand-300 hover:text-brand-200 underline decoration-dotted">Claim your spot →</a>
+    </div>
+  </div>
+
+  <!-- Navbar (Flowbite component) -->
+  <nav class="bg-white border-b border-slate-100 sticky top-0 z-50">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="#home" class="flex items-center space-x-2 rtl:space-x-reverse">
+        <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-brand-500 text-white font-bold">SC</span>
+        <span class="self-center text-xl font-semibold whitespace-nowrap">AI Sprint Copilot</span>
+      </a>
+      <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-slate-500 rounded-lg md:hidden hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-200" aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/></svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+        <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-slate-100 rounded-lg bg-slate-50 md:flex-row md:space-x-6 md:mt-0 md:border-0 md:bg-white">
+          <li><a href="#how" class="block py-2 px-3 hover:text-brand-600">How it works</a></li>
+          <li><a href="#features" class="block py-2 px-3 hover:text-brand-600">Features</a></li>
+          <li><a href="#integrations" class="block py-2 px-3 hover:text-brand-600">Integrations</a></li>
+          <li><a href="#pricing" class="block py-2 px-3 hover:text-brand-600">Pricing</a></li>
+          <li><a href="#faq" class="block py-2 px-3 hover:text-brand-600">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <a href="#demo" class="text-slate-600 hover:text-slate-900">Watch demo</a>
+        <a href="#signup" class="inline-flex items-center rounded-lg bg-brand-600 px-4 py-2 text-white hover:bg-brand-700 shadow-soft">Start free</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero (Flowbite Marketing UI style) -->
+  <section id="home" class="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-white">
+    <div class="mx-auto max-w-screen-xl px-4 py-16 md:py-24">
+      <div class="grid items-center gap-10 md:grid-cols-2">
+        <div>
+          <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">
+            <span class="h-2 w-2 rounded-full bg-brand-500"></span>
+            Public beta · Expert sprint facilitation on demand
+          </div>
+          <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+            Clarify in <span class="text-brand-600">48 hours</span>. Prototype & test in <span class="text-brand-600">5 days</span>.
+          </h1>
+          <p class="mt-5 text-lg text-slate-600 max-w-xl">
+            Meet <span class="font-semibold text-slate-900">AI Sprint Copilot</span> — the world’s first AI‑powered facilitator for the
+            Foundation Sprint and Google Design Sprint. It guides, synthesizes, and accelerates your team to evidence‑backed decisions.
+          </p>
+          <div class="mt-6 flex flex-col sm:flex-row gap-3">
+            <a href="#signup" class="inline-flex items-center justify-center rounded-lg bg-brand-600 px-5 py-3 text-white hover:bg-brand-700 shadow-soft" data-gtm="cta_hero_start">
+              Start free
+            </a>
+            <a href="#book" class="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-3 text-slate-900 hover:bg-slate-50" data-gtm="cta_hero_book">
+              Book a live sprint
+            </a>
+          </div>
+          <div class="mt-6 flex items-center gap-5 text-sm text-slate-500">
+            <div class="flex items-center gap-2"><svg class="h-5 w-5 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> No credit card</div>
+            <div class="flex items-center gap-2"><svg class="h-5 w-5 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 10‑min setup</div>
+            <div class="flex items-center gap-2"><svg class="h-5 w-5 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Templates included</div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="aspect-[4/3] w-full rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+            <div class="h-full w-full rounded-xl bg-slate-900/95 text-white flex items-center justify-center">
+              <div class="text-center p-6">
+                <p class="text-sm uppercase tracking-widest text-brand-300 mb-2">Product teaser</p>
+                <h3 class="text-2xl font-semibold">Your best facilitator never sleeps</h3>
+                <p class="mt-2 text-slate-300 max-w-md mx-auto">Live guidance • Real‑time synthesis • Adaptive pacing</p>
+                <a href="#demo" class="mt-5 inline-flex items-center rounded-lg bg-white/10 px-4 py-2 text-white ring-1 ring-white/20 hover:bg-white/20">Watch 90‑sec demo</a>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-3 gap-3 text-xs text-slate-500">
+            <div class="rounded-lg border border-slate-200 p-3">Auto‑cluster notes</div>
+            <div class="rounded-lg border border-slate-200 p-3">Draft Founding Hypothesis</div>
+            <div class="rounded-lg border border-slate-200 p-3">Figma prototype assist</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social proof strip -->
+      <div class="mt-12 border-t border-slate-100 pt-8">
+        <p class="text-center text-sm text-slate-500">Trusted by founders and product teams at</p>
+        <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 opacity-70">
+          <div class="h-8 bg-slate-100 rounded"></div>
+          <div class="h-8 bg-slate-100 rounded"></div>
+          <div class="h-8 bg-slate-100 rounded"></div>
+          <div class="h-8 bg-slate-100 rounded"></div>
+          <div class="h-8 bg-slate-100 rounded"></div>
+          <div class="h-8 bg-slate-100 rounded"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem → Solution (Marketing block) -->
+  <section class="bg-white">
+    <div class="mx-auto max-w-screen-xl px-4 py-16 md:py-24">
+      <div class="grid md:grid-cols-2 gap-12 items-start">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight">Why sprints fail</h2>
+          <ul class="mt-6 space-y-4 text-slate-600">
+            <li class="flex gap-3"><span class="mt-1 h-6 w-6 rounded-full bg-red-50 text-red-600 inline-flex items-center justify-center">✕</span> Lost at the start: unclear customer, problem, or differentiation.</li>
+            <li class="flex gap-3"><span class="mt-1 h-6 w-6 rounded-full bg-red-50 text-red-600 inline-flex items-center justify-center">✕</span> Endless debates; the loudest voice wins; no synthesis.</li>
+            <li class="flex gap-3"><span class="mt-1 h-6 w-6 rounded-full bg-red-50 text-red-600 inline-flex items-center justify-center">✕</span> Rushed prototypes that don’t mirror the idea being tested.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-3xl font-bold tracking-tight">Meet the Copilot</h3>
+          <p class="mt-4 text-slate-600">An AI facilitator trained on <em>Sprint</em> and <em>Click</em> that keeps the team on time, synthesizes inputs in real time, and helps you land an evidence‑backed decision.</p>
+          <div class="mt-6 grid sm:grid-cols-2 gap-4">
+            <div class="rounded-xl border p-4"><span class="font-semibold">Adaptive facilitation</span><p class="text-sm text-slate-600 mt-1">Moves the group from talking to sketching when stuck.</p></div>
+            <div class="rounded-xl border p-4"><span class="font-semibold">Real‑time synthesis</span><p class="text-sm text-slate-600 mt-1">Clusters notes, names themes, and drafts your Mini‑Manifesto.</p></div>
+            <div class="rounded-xl border p-4"><span class="font-semibold">Prototype assist</span><p class="text-sm text-slate-600 mt-1">Generates UI scaffolds and assets in Figma.</p></div>
+            <div class="rounded-xl border p-4"><span class="font-semibold">Persona role‑play</span><p class="text-sm text-slate-600 mt-1">Stress‑tests ideas with AI customers before live interviews.</p></div>
+          </div>
+          <div class="mt-6"><a href="#signup" class="inline-flex items-center rounded-lg bg-brand-600 px-5 py-3 text-white hover:bg-brand-700 shadow-soft">Get started</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how" class="bg-slate-50">
+    <div class="mx-auto max-w-screen-xl px-4 py-16 md:py-24">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold tracking-tight">How it works</h2>
+        <p class="mt-3 text-slate-600">Foundation Sprint in 2 days → Google Design Sprint in 5 days</p>
+      </div>
+      <div class="mt-10 grid md:grid-cols-3 gap-6">
+        <div class="rounded-2xl bg-white p-6 border">
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-50 text-brand-700">1</span>
+          <h3 class="mt-3 font-semibold">Define & Differentiate</h3>
+          <p class="mt-2 text-sm text-slate-600">Clarify customer, problem, unfair advantage; map competitors; draft Mini‑Manifesto.</p>
+        </div>
+        <div class="rounded-2xl bg-white p-6 border">
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-50 text-brand-700">2</span>
+          <h3 class="mt-3 font-semibold">Explore & Hypothesize</h3>
+          <p class="mt-2 text-sm text-slate-600">Generate approaches, evaluate with Magic Lenses, choose Top Bet, craft Founding Hypothesis.</p>
+        </div>
+        <div class="rounded-2xl bg-white p-6 border">
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-50 text-brand-700">3</span>
+          <h3 class="mt-3 font-semibold">Prototype & Test</h3>
+          <p class="mt-2 text-sm text-slate-600">Build a realistic prototype, interview customers, and make an evidence‑backed decision.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo / Preview -->
+  <section id="demo" class="bg-white">
+    <div class="mx-auto max-w-screen-xl px-4 py-16 md:py-24">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div class="aspect-video rounded-2xl bg-slate-900 text-white flex items-center justify-center">
+          <div class="text-center p-6">
+            <p class="text-sm uppercase tracking-widest text-brand-300 mb-2">90‑second demo</p>
+            <h3 class="text-2xl font-semibold">See the Copilot in action</h3>
+            <p class="mt-2 text-slate-300">Timer + templates + synthesis + Figma assist</p>
+            <button class="mt-4 inline-flex items-center rounded-lg bg-white/10 px-4 py-2 text-white ring-1 ring-white/20">Play</button>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-3xl font-bold tracking-tight">From chaos to clarity</h3>
+          <ul class="mt-6 space-y-3 text-slate-600">
+            <li class="flex gap-3"><svg class="h-6 w-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Auto‑cluster sticky notes into clear themes.</li>
+            <li class="flex gap-3"><svg class="h-6 w-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Draft your Founding Hypothesis with one click.</li>
+            <li class="flex gap-3"><svg class="h-6 w-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Generate Figma frames, copy, and assets.</li>
+            <li class="flex gap-3"><svg class="h-6 w-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Role‑play customer interviews to pressure‑test.</li>
+          </ul>
+          <div class="mt-6 flex gap-3">
+            <a href="#signup" class="inline-flex items-center rounded-lg bg-brand-600 px-5 py-3 text-white hover:bg-brand-700 shadow-soft">Join waitlist</a>
+            <a href="#features" class="inline-flex items-center rounded-lg border px-5 py-3 text-slate-900 hover:bg-slate-50">Explore features</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features grid -->
+  <section id="features" class="bg-slate-50">
+    <div class="mx-auto max-w-screen-xl px-4 py-16 md:py-24">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl font-bold tracking-tight">Everything you need to run world‑class sprints</h2>
+        <p class="mt-3 text-slate-600">From Foundation to user testing, the Copilot is by your side.</p>
+      </div>
+      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="rounded-2xl bg-white p-6 border"><h4 class="font-semibold">Agenda & pacing</h4><p class="mt-2 text-sm text-slate-600">Dynamic timers, stage guidance, and energy‑aware nudges.</p></div>
+        <div class="rounded-2xl bg-white p-6 border"><h4 class="font-semibold">Note clustering</h4><p class="mt-2 text-sm text-slate-600">Instantly group sticky notes into named themes.</p></div>
+        <div class="rounded-2xl bg-white p-6 border"><h4 class="font-semibold">Decision support</h4><p class="mt-2 text-sm text-slate-600">2×2 charts, Magic Lenses, and Decider handoffs.</p></div>
+        <div class="rounded-2xl bg-white p-6 border"><h4 class="font-semibold">Hypothesis builder</h4><p class="mt-2 text-sm text-slate-600">Craft and version Founding Hypotheses your team can back.</p></div>
+        <div class="rounded-2xl bg-white p-6 border"><h4 class="font-semibold">Prototype assist</h4><p class="mt-2 text-sm text-slate-600">Generate Figma frames, UI scaffolds, and copy.</p></div>
+        <div class="rounded-2xl bg-white p-6 border"><h4 class="font-semibold">Persona role‑play</h4><p class="mt-2 text-sm text-slate-600">Simulate interviews to debug your test before Day 5.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Personas tabs (Flowbite Tabs) -->
+  <section class="bg-white">
+    <div class="mx-auto max-w-screen-xl px-4 py-16 md:py-24">
+      <div class="mb-6 text-center">
+        <h2 class="text-3xl font-bold tracking-tight">Built for your role</h2>
+        <p class="mt-2 text-slate-600">Focused benefits for Founders, PMs, and Agencies</p>
+      </div>
+      <div class="mb-4 border-b border-slate-200">
+        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="roleTab" data-tabs-toggle="#roleTabContent" role="tablist">
+          <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg" id="founders-tab" data-tabs-target="#founders" type="button" role="tab" aria-controls="founders" aria-selected="true">Founders</button>
+          </li>
+          <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg" id="pms-tab" data-tabs-target="#pms" type="button" role="tab" aria-controls="pms" aria-selected="false">Product Managers</button>
+          </li>
+          <li role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg" id="agencies-tab" data-tabs-target="#agencies" type="button" role="tab" aria-controls="agencies" aria-selected="false">Agencies</button>
+          </li>
+        </ul>
+      </div>
+      <div id="roleTabContent">
+        <div class="hidden p-4 rounded-lg bg-slate-50" id="founders" role="tabpanel" aria-labelledby="founders-tab">
+          <ul class="grid sm:grid-cols-2 gap-4 text-slate-700">
+            <li>Ship a clear story for investors in one week.</li>
+            <li>Reduce burn by validating before building.</li>
+            <li>Align cofounders and advisors on one plan.</li>
+            <li>Plug‑and‑play templates; zero learning curve.</li>
+          </ul>
+        </div>
+        <div class="hidden p-4 rounded-lg bg-slate-50" id="pms" role="tabpanel" aria-labelledby="pms-tab">
+          <ul class="grid sm:grid-cols-2 gap-4 text-slate-700">
+            <li>Convert abstract strategy into testable hypotheses.</li>
+            <li>Unblock teams with guided decisions, not meetings.</li>
+            <li>Generate believable prototypes faster.</li>
+            <li>Leave a clean paper trail for stakeholders.</li>
+          </ul>
+        </div>
+        <div class="hidden p-4 rounded-lg bg-slate-50" id="agencies" role="tabpanel" aria-labelledby="agencies-tab">
+          <ul class="grid sm:grid-cols-2 gap-4 text-slate-700">
+            <li>Productize Sprint offerings with consistent quality.</li>
+            <li>Scale billable work without scaling headcount.</li>
+            <li>Co‑brand templates and reports for clients.</li>
+            <li>White‑glove runway: your team + our Copilot.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrations -->
+  <section id="integrations" class="bg-slate-50">
+    <div class="mx-auto max-w-screen-xl px-4 py-16 md:py-24">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight">Works with your stack</h2>
+          <p class="mt-3 text-slate-600">Use the tools you already love. No heavy setup needed.</p>
+          <div class="mt-6 grid grid-cols-3 gap-3">
+            <div class="h-14 rounded-xl bg-white border flex items-center justify-center">Miro</div>
+            <div class="h-14 rounded-xl bg-white border flex items-center justify-center">Figma</div>
+            <div class="h-14 rounded-xl bg-white border flex items-center justify-center">Slack</div>
+            <div class="h-14 rounded-xl bg-white border flex items-center justify-center">Notion</div>
+            <div class="h-14 rounded-xl bg-white border flex items-center justify-center">Zoom</div>
+            <div class="h-14 rounded-xl bg-white border flex items-center justify-center">Drive</div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-white p-6 border">
+          <h3 class="font-semibold">Security & privacy</h3>
+          <ul class="mt-3 text-sm text-slate-600 list-disc list-inside">
+            <li>Data stays in your workspace; export at any time.</li>
+            <li>Role‑based access and audit trails.</li>
+            <li>Works with SSO (SAML/OIDC) on Enterprise.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI & Comparison -->
+  <section class="bg-white">
+    <div class="mx-auto max-w-screen-xl px-4 py-16 md:py-24">
+      <div class="grid md:grid-cols-2 gap-10 items-start">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight">Return on clarity</h2>
+          <p class="mt-3 text-slate-600">A single sprint can save months of burn. With Copilot, you get consistent quality every time.</p>
+          <div class="mt-6 overflow-hidden rounded-xl border">
+            <table class="w-full text-sm">
+              <thead class="bg-slate-50 text-slate-600">
+                <tr>
+                  <th class="p-3 text-left">Approach</th>
+                  <th class="p-3 text-left">Speed</th>
+                  <th class="p-3 text-left">Quality</th>
+                  <th class="p-3 text-left">Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-t"><td class="p-3">Status quo (meetings)</td><td class="p-3">Slow</td><td class="p-3">Inconsistent</td><td class="p-3">High (hidden)</td></tr>
+                <tr class="border-t"><td class="p-3">Agency sprint</td><td class="p-3">Fast</td><td class="p-3">High (varies)</td><td class="p-3">$25k–$60k</td></tr>
+                <tr class="border-t bg-brand-50/60"><td class="p-3 font-semibold">AI Sprint Copilot</td><td class="p-3 font-semibold">Fastest</td><td class="p-3 font-semibold">Consistent</td><td class="p-3 font-semibold">From $0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <div class="rounded-2xl bg-slate-50 p-6 border">
+            <h3 class="font-semibold">Typical outcomes in week 1</h3>
+            <ul class="mt-4 space-y-2 text-slate-700 text-sm">
+              <li>✔ One clear Founding Hypothesis the team supports</li>
+              <li>✔ Prototype screens covering the happy path</li>
+              <li>✔ 5 customer interviews with synthesized insights</li>
+              <li>✔ A confident decision: commit, pivot, or kill</li>
+            </ul>
+          </div>
+          <div class="mt-4"><a href="#signup" class="inline-flex items-center rounded-lg bg-brand-600 px-5 py-3 text-white hover:bg-brand-700 shadow-soft">Calculate your ROI</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials (Flowbite Carousel simplified) -->
+  <section class="bg-slate-50">
+    <div class="mx-auto max-w-screen-xl px-4 py-16 md:py-24">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl font-bold tracking-tight">What teams say</h2>
+        <p class="mt-3 text-slate-600">From seed‑stage startups to innovation labs</p>
+      </div>
+      <div class="mt-10 grid md:grid-cols-3 gap-6">
+        <figure class="rounded-2xl bg-white p-6 border"><blockquote class="text-slate-700">“Copilot kept us moving and surfaced the signal. We left with a story our investors loved.”</blockquote><figcaption class="mt-4 text-sm text-slate-500">Founder, Fintech</figcaption></figure>
+        <figure class="rounded-2xl bg-white p-6 border"><blockquote class="text-slate-700">“The persona role‑play caught issues before Day 5. Interviews were so much sharper.”</blockquote><figcaption class="mt-4 text-sm text-slate-500">PM, Healthtech</figcaption></figure>
+        <figure class="rounded-2xl bg-white p-6 border"><blockquote class="text-slate-700">“Figma assist generated believable frames in hours, not days.”</blockquote><figcaption class="mt-4 text-sm text-slate-500">Design Lead, Agency</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing (Flowbite pricing table) -->
+  <section id="pricing" class="bg-white">
+    <div class="mx-auto max-w-screen-xl px-4 py-16 md:py-24">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl font-bold tracking-tight">Simple pricing</h2>
+        <p class="mt-3 text-slate-600">Start free. Upgrade when ready. Founders Club saves 40% for life.</p>
+      </div>
+      <div class="mt-10 grid md:grid-cols-3 gap-6">
+        <div class="rounded-2xl border p-6">
+          <h3 class="text-lg font-semibold">Free</h3>
+          <p class="mt-2 text-slate-600 text-sm">For quick trials and small teams</p>
+          <p class="mt-4 text-3xl font-bold">$0</p>
+          <ul class="mt-4 space-y-2 text-sm text-slate-700">
+            <li>✔ 1 project · Core facilitation</li>
+            <li>✔ Note clustering · Hypothesis builder</li>
+            <li>✔ 3 templates included</li>
+          </ul>
+          <a href="#signup" class="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-brand-600 px-5 py-3 text-white hover:bg-brand-700">Start free</a>
+        </div>
+        <div class="rounded-2xl border p-6 ring-1 ring-brand-200">
+          <div class="inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1 text-xs text-brand-700">Most popular</div>
+          <h3 class="mt-2 text-lg font-semibold">Pro</h3>
+          <p class="mt-2 text-slate-600 text-sm">For teams running regular sprints</p>
+          <p class="mt-4 text-3xl font-bold">$49<span class="text-base font-medium text-slate-500">/user</span></p>
+          <ul class="mt-4 space-y-2 text-sm text-slate-700">
+            <li>✔ Unlimited projects · Advanced synthesis</li>
+            <li>✔ Figma prototype assist</li>
+            <li>✔ Persona role‑play · Report exports</li>
+          </ul>
+          <a href="#signup" class="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-brand-600 px-5 py-3 text-white hover:bg-brand-700">Start Pro trial</a>
+        </div>
+        <div class="rounded-2xl border p-6">
+          <h3 class="text-lg font-semibold">Enterprise</h3>
+          <p class="mt-2 text-slate-600 text-sm">Security, scale, and success</p>
+          <p class="mt-4 text-3xl font-bold">Custom</p>
+          <ul class="mt-4 space-y-2 text-sm text-slate-700">
+            <li>✔ SSO, RBAC, audit logs</li>
+            <li>✔ Private deployments</li>
+            <li>✔ White‑glove Sprint facilitation</li>
+          </ul>
+          <a href="#book" class="mt-6 inline-flex w-full items-center justify-center rounded-lg border px-5 py-3 text-slate-900 hover:bg-slate-50">Talk to sales</a>
+        </div>
+      </div>
+      <p class="mt-4 text-center text-xs text-slate-500">Founders Club: 40% lifetime discount for first 50 teams.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="bg-slate-50">
+    <div class="mx-auto max-w-screen-xl px-4 py-16 md:py-24">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl font-bold tracking-tight">Frequently asked questions</h2>
+        <p class="mt-3 text-slate-600">Everything you need to know</p>
+      </div>
+      <div class="mt-10 grid md:grid-cols-2 gap-6">
+        <div class="rounded-2xl bg-white p-6 border">
+          <h3 class="font-semibold">Is this replacing a human facilitator?</h3>
+          <p class="mt-2 text-sm text-slate-600">No. Copilot augments your team with expert guidance and synthesis. Humans lead culture and judgment.</p>
+        </div>
+        <div class="rounded-2xl bg-white p-6 border">
+          <h3 class="font-semibold">Do we need special tools?</h3>
+          <p class="mt-2 text-sm text-slate-600">No. It works with Miro, Figma, Slack, Notion, Zoom and your existing stack.</p>
+        </div>
+        <div class="rounded-2xl bg-white p-6 border">
+          <h3 class="font-semibold">Is our data safe?</h3>
+          <p class="mt-2 text-sm text-slate-600">Yes. Your data stays in your workspace. Enterprise adds SSO, RBAC, and audit logs.</p>
+        </div>
+        <div class="rounded-2xl bg-white p-6 border">
+          <h3 class="font-semibold">Can you run our sprint for us?</h3>
+          <p class="mt-2 text-sm text-slate-600">Yes. Book a white‑glove sprint with our team, powered by Copilot.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA / Signup -->
+  <section id="signup" class="bg-white">
+    <div class="mx-auto max-w-screen-md px-4 py-16 md:py-24 text-center">
+      <h2 class="text-3xl font-bold tracking-tight">Get clarity. Ship with conviction.</h2>
+      <p class="mt-3 text-slate-600">Join the waitlist and receive 5 Sprint templates instantly.</p>
+      <form action="#" method="post" class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+        <input type="email" required placeholder="you@company.com" class="w-full sm:w-96 rounded-lg border border-slate-200 px-4 py-3" />
+        <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-brand-600 px-5 py-3 text-white hover:bg-brand-700 shadow-soft" data-gtm="cta_signup_submit">Join waitlist</button>
+      </form>
+      <p class="mt-2 text-xs text-slate-500">No spam · Unsubscribe anytime</p>
+    </div>
+  </section>
+
+  <!-- Book a live sprint anchor -->
+  <section id="book" class="bg-slate-50">
+    <div class="mx-auto max-w-screen-md px-4 py-12 text-center">
+      <h3 class="text-xl font-semibold">Prefer white‑glove facilitation?</h3>
+      <p class="mt-2 text-slate-600">Book a live sprint with our team (limited slots each month).</p>
+      <a href="#signup" class="mt-4 inline-flex items-center rounded-lg border px-5 py-3 text-slate-900 hover:bg-slate-100">Request scheduling link</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-300">
+    <div class="mx-auto max-w-screen-xl px-4 py-12">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-brand-500 text-white font-bold">SC</span>
+          <div>
+            <p class="font-semibold text-white">AI Sprint Copilot</p>
+            <p class="text-xs text-slate-400">Expert sprint facilitation on demand</p>
+          </div>
+        </div>
+        <ul class="flex flex-wrap items-center gap-4 text-sm">
+          <li><a href="#how" class="hover:text-white">How it works</a></li>
+          <li><a href="#pricing" class="hover:text-white">Pricing</a></li>
+          <li><a href="#faq" class="hover:text-white">FAQ</a></li>
+          <li><a href="#signup" class="hover:text-white">Get started</a></li>
+        </ul>
+      </div>
+      <div class="mt-8 border-t border-white/10 pt-6 text-xs text-slate-400">© <span id="year"></span> AI Sprint Copilot. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Sticky bottom bar (exit intent) -->
+  <div id="stickyCta" class="fixed inset-x-0 bottom-0 z-40 hidden md:block">
+    <div class="mx-auto max-w-screen-md">
+      <div class="m-4 rounded-2xl border bg-white p-4 shadow-soft flex items-center justify-between gap-3">
+        <p class="text-sm">🚀 Join the Founders Club — lifetime 40% off for the first 50 teams.</p>
+        <div class="flex gap-2">
+          <a href="#pricing" class="inline-flex items-center rounded-lg border px-4 py-2 text-slate-900 hover:bg-slate-50">Details</a>
+          <a href="#signup" class="inline-flex items-center rounded-lg bg-brand-600 px-4 py-2 text-white hover:bg-brand-700">Join waitlist</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.js"></script>
+  <script>
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll progress
+    const progress = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+      progress.style.width = scrolled + '%';
+      // Reveal sticky CTA after 40% scroll
+      const sticky = document.getElementById('stickyCta');
+      if (scrolled > 40) sticky.classList.remove('hidden');
+    }, { passive: true });
+  </script>
+</body>
+</html>
